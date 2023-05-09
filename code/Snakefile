@@ -1,16 +1,27 @@
-# The main entry point of your workflow.
-# After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
-
-include: "rules/common.smk"
 configfile: "config/config.yaml"
+include: "rules/common.py"
+include: "rules/ebpmf.smk"
+include: "rules/QTLs.smk"
 
-# Instead of using samples.tsv file, a quick/dirty way to apply rules over grob of existing files is this:
-# IDS, = glob_wildcards("Path/To/{MyFileNames}.bed.gz")
+include: "rules/GeneExpression.smk"
 
+localrules:
+    all,
+     DownloadHg19Ref
+     
 rule all:
     input:
-        # The first rule should define the default target files
-        # Subsequent target rules can be specified below. They should start with all_*.
-
-
-include: "rules/other.smk"
+        "featureCounts/rnaseq/Counts.txt",
+        expand("coverage/bigwigs/{Phenotype}/{IndID}.bw", zip, Phenotype=samples.Phenotype, IndID=samples.Sample),
+        expand("coverage/bed/{Phenotype}/{IndID}.bed.bgz", zip, Phenotype=samples.Phenotype, IndID=samples.Sample),
+        expand("coverage/bed/{Phenotype}/{IndID}.bed.bgz.tbi", zip, Phenotype=samples.Phenotype, IndID=samples.Sample),
+        expand("coverage/counts/{Phenotype}/{Region}.csv.gz", Phenotype=Phenotype_list, 
+        Region = ['IL27', 'IDO1', 'TAP1', 'CMC2', 'AIF1L', 'RETN', 'GTF3C6', 'IRF2', 'CMC2_extended',
+                           'FAM220A_extended', 'GTF3C6_extended', 'HDDC2_extended', 'HLA-DRB5_extended', 'IRF2_extended',
+                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended']),
+        expand("ebpmf_models/RDS/{Region}.K{K}.rds", 
+                         Region = ['IL27', 'IDO1', 'TAP1', 'CMC2', 'AIF1L', 'RETN', 'GTF3C6', 'IRF2', 'CMC2_extended',
+                           'FAM220A_extended', 'GTF3C6_extended', 'HDDC2_extended', 'HLA-DRB5_extended', 'IRF2_extended',
+                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended'],
+                           K = ['2', '3', '4', '5', '8', '10']),
+        expand("QTLs/{Pass}.{phenotype}.txt.gz", Pass=['NominalPass', 'PermutationPass'], phenotype=['ni', 'flu']),

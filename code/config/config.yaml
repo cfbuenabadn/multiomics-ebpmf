@@ -3,3 +3,11 @@
 # one row per sample. It can be parsed easily via pandas.
 
 samples: config/samples.tsv
+
+QTLtools: "scripts/QTLtools"
+
+
+featureCounts: "/home/cnajar/subread-2.0.5-Linux-x86_64/bin/featureCounts"
+R: "/software/R-4.1.0-el8-x86_64/bin/R"
+Rscript: "/software/R-4.1.0-el8-x86_64/bin/Rscript"
+python: "/project2/mstephens/cfbuenabadn/anaconda3/bin/python"
