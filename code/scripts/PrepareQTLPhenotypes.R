@@ -127,3 +127,13 @@ bed %>%
                by = "pid"
     ) %>%
 write_tsv('QTLs/rnaseq.ni.unsort.bed.gz')
+
+                                             
+dat.rpkm <- counts %>%
+    filter(Geneid %in% ProteinCodingGenes  ) %>%
+    filter(Chr %in% paste0("chr", 1:22)) %>%
+    column_to_rownames("Geneid") %>%
+    select(everything(), -c("Chr", "Start", "End", "Strand", "Length", "#Chr", 'start', 'end', 'strand', 'pid', 'gid')) %>%
+    rpkm(prior.count=0.1, log=T, gene.length=counts$Length)
+                                             
+dat.rpkm[GenesToInclude,] %>% as.data.frame() %>% rownames_to_column(., var = "Geneid") %>% write_tsv('QTLs/rnaseq.logRPKM.tab.gz')

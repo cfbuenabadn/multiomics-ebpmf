@@ -46,6 +46,9 @@ def GetRegionCoords(wildcards):
     elif wildcards.Region == 'RETN_extended':
         return 'chr19 7680200 7776000'
         
+    elif wildcards.Region == 'TRIM25_extended':
+        return 'chr17 54930300 55105700'
+        
         
 
 rule CreateRegionCounts:
@@ -61,7 +64,8 @@ rule CreateRegionCounts:
     wildcard_constraints:
         Region = '|'.join(['IL27', 'IDO1', 'TAP1', 'CMC2', 'AIF1L', 'RETN', 'GTF3C6', 'IRF2', 'CMC2_extended',
                            'FAM220A_extended', 'GTF3C6_extended', 'HDDC2_extended', 'HLA-DRB5_extended', 'IRF2_extended',
-                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended'])
+                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended',
+                           'TRIM25_extended'])
     params:
         GetRegionCoords
     shell:
@@ -82,7 +86,8 @@ rule run_ebpmf:
     wildcard_constraints:
         Region = '|'.join(['IL27', 'IDO1', 'TAP1', 'CMC2', 'AIF1L', 'RETN', 'GTF3C6', 'IRF2', 'CMC2_extended',
                            'FAM220A_extended', 'GTF3C6_extended', 'HDDC2_extended', 'HLA-DRB5_extended', 'IRF2_extended',
-                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended']),
+                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended',
+                           'TRIM25_extended']),
         K = '2|3|4|5|8|10'
     shell:
         """

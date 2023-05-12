@@ -22,6 +22,7 @@ rule all:
         expand("ebpmf_models/RDS/{Region}.K{K}.rds", 
                          Region = ['IL27', 'IDO1', 'TAP1', 'CMC2', 'AIF1L', 'RETN', 'GTF3C6', 'IRF2', 'CMC2_extended',
                            'FAM220A_extended', 'GTF3C6_extended', 'HDDC2_extended', 'HLA-DRB5_extended', 'IRF2_extended',
-                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended'],
+                           'MRPL18_extended', 'RP11-661A12.5_extended', 'YBEY_extended', 'ZFAND2A_extended', 'RETN_extended',
+                           'TRIM25_extended'],
                            K = ['2', '3', '4', '5', '8', '10']),
         expand("QTLs/{Pass}.{phenotype}.txt.gz", Pass=['NominalPass', 'PermutationPass'], phenotype=['ni', 'flu']),

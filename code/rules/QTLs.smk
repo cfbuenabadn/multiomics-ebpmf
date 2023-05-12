@@ -4,7 +4,8 @@ rule PrepareBedForQTLTools:
         'Annotations/gencode.v19.annotation.gtf'
     output:
         'QTLs/rnaseq.flu.unsort.bed.gz',
-        'QTLs/rnaseq.ni.unsort.bed.gz'
+        'QTLs/rnaseq.ni.unsort.bed.gz',
+        'QTLs/rnaseq.logRPKM.tab.gz'
     log:
         'logs/prepareQTLsPhenotypes.log'
     shell:
